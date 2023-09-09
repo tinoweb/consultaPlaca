@@ -164,11 +164,21 @@
                                 <!-- <img src="../qrCode.png" alt="qrCode Pagar valor consulta placa"> -->
                                 <img src="{{ url_for('static', filename='qrCode.png') }}" style="width: 62%;" alt="QR Code PIX">
                             </p>
+                            <textarea id="paymentCodeTextarea" class="form-control" rows="4" readonly>
+                                00020126580014br.gov.bcb.pix01361272e338-b55f-4c59-93b3-c50844a0942f520400005303986540550.005802BR5908softlike6009Sao_Paulo62290525c8647cb02d1a463a8fe28f18f6304C8AC
+                                        </textarea>
+
+                            <!-- No modal -->
+                            <!-- <button id="copyPaymentCodeBtn" class="btn btn-primary">Copiar Código de Pagamento</button> -->
+                            <div class="d-flex justify-content-center mb-4">
+                                <button id="copyPaymentCodeBtn" class="btn btn-success">Copiar Código de Pagamento</button>
+                            </div>
+
                             <p><strong>Valor:</strong> R$ 50,00</p>
                             <p>Após realizar o pagamento, envie o comprovante para nosso WhatsApp.</p>
                         </div>
                         <div class="modal-footer">
-                            <a href="https://wa.me/8598589498?text=Olá! Acabei de realizar o pagamento." class="btn btn-primary" target="_blank">Enviar Comprovante pelo WhatsApp</a>
+                            <a href="https://wa.me/558598589498?text=Olá! Acabei de realizar o pagamento." class="btn btn-primary" target="_blank">Enviar Comprovante pelo WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -198,6 +208,37 @@
             // Desativar o botão
             document.getElementById("submit-button").disabled = true;
         }
+
+       
+        document.getElementById('copyPaymentCodeBtn').addEventListener('click', function() {
+            // Seleciona a textarea que contém o código de pagamento
+            var paymentCodeTextarea = document.getElementById('paymentCodeTextarea');
+            // Seleciona o botão de cópia
+            var copyButton = document.getElementById('copyPaymentCodeBtn');
+
+            try {
+                // Remove os espaços em branco do início e do fim do texto
+                var code = paymentCodeTextarea.value.trim();
+                
+                // Copia o texto para a área de transferência
+                navigator.clipboard.writeText(code).then(function() {
+                    // Altera o texto do botão para "Código Copiado"
+                    copyButton.textContent = 'Código Copiado';
+
+                    // Notifica o usuário que o código foi copiado
+                    // alert('Código copiado para a área de transferência: ' + code);
+                }).catch(function(err) {
+                    console.error('Erro ao copiar: ', err);
+                    // alert('Erro ao copiar o código.'); // Em caso de erro
+                });
+                
+            } catch (err) {
+                console.error('Erro ao copiar: ', err);
+                // alert('Erro ao copiar o código.'); // Em caso de erro
+            }
+        });
+
+
     </script>
 
 
